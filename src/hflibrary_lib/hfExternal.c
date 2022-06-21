@@ -40,6 +40,7 @@
 */
 
 #include "hfp-sock.h"
+#include "hfp-sockdata.h"
 
 #include "general.h"
 #include <stdlib.h>

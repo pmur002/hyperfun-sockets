@@ -37,6 +37,7 @@ if not, see -  http://CGPL.org to get a copy of the License.
 
 #include "main.h"
 #include "hfp-sock.h"
+#include "hfp-sockdata.h"
 
 CMainApp *edi;
 
