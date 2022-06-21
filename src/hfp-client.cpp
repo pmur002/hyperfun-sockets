@@ -35,34 +35,8 @@ if not, see -  http://CGPL.org to get a copy of the License.
  * https://beej.us/guide/bgnet/html/index-wide.html#client-server-background
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <errno.h>
-#include <string.h>
-
-#include <sys/types.h>
-
-#ifdef _WIN32
-
-#include <winsock2.h>
-#include <windows.h>
-#include <ws2tcpip.h>
-
-#else
-
-#include <sys/socket.h>
-#include <netdb.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-
-#endif
-
-#define PORT "12345" // the port client will be connecting to 
-
-#define MAXDATASIZE 100 // max number of bytes we can get at once 
-
 #include "main.h"
+#include "hfp-sock.h"
 
 CMainApp *edi;
 
@@ -83,7 +57,7 @@ void *get_in_addr(struct sockaddr *sa)
 
 int main(int argc, char *argv[])
 {
-    int sockfd, numbytes;  
+    int numbytes;  
     char buf[MAXDATASIZE];
     struct addrinfo *servinfo, *p, hints;
     int rv;
@@ -92,6 +66,8 @@ int main(int argc, char *argv[])
 #ifdef _WIN32
     WSADATA wsaData;
     int iResult;
+
+    HF_sockfd = -1;
 
     // Initialize Winsock
     iResult = WSAStartup(MAKEWORD(2,2), &wsaData);
@@ -119,7 +95,7 @@ int main(int argc, char *argv[])
 
     // loop through all the results and connect to the first we can
     for(p = servinfo; p != NULL; p = p->ai_next) {
-        if ((sockfd = socket(p->ai_family, p->ai_socktype,
+        if ((HF_sockfd = socket(p->ai_family, p->ai_socktype,
                 p->ai_protocol)) == -1) {
             perror("client: socket");
 #ifdef _WIN32
@@ -128,8 +104,8 @@ int main(int argc, char *argv[])
             continue;
         }
 
-        if (connect(sockfd, p->ai_addr, p->ai_addrlen) == -1) {
-            close(sockfd);
+        if (connect(HF_sockfd, p->ai_addr, p->ai_addrlen) == -1) {
+            close(HF_sockfd);
             perror("client: connect");
 #ifdef _WIN32
             WSACleanup();
@@ -166,10 +142,10 @@ int main(int argc, char *argv[])
     freeRessources();
 
     // send "0"
-    if (send(sockfd, "0", 1, 0) == -1)
+    if (send(HF_sockfd, "0", 1, 0) == -1)
         perror("send");
 
-    close(sockfd);
+    close(HF_sockfd);
 #ifdef _WIN32
     WSACleanup();
 #endif

@@ -22,8 +22,13 @@ hyperfun.socket <- function(args) {
     ## Create socket 
     s <- make.socket("localhost", 12345, server=TRUE)
     ## Wait for a response
-    reply <- read.socket(s, loop=TRUE)
-    print(reply)
+    while (TRUE) {
+        reply <- read.socket(s, loop=TRUE)
+        if (reply == "0")
+            break
+        values <- as.numeric(strsplit(reply, " ")[[1]])
+        write.socket(s, as.character(values[2]))
+    }
     on.exit(close.socket(s))    
 }
 

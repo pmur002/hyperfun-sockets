@@ -54,6 +54,8 @@ double hfEllCylY(double* f_a, String_Array_T* str_param);
 
 double hfEllCylZ(double* f_a, String_Array_T* str_param);
 
+double hfExternal(double* f_a, String_Array_T* str_param);
+
 double hfCylinderZ(double* f_a, String_Array_T* str_param);
 
 double hfCylinderY(double* f_a, String_Array_T* str_param);
