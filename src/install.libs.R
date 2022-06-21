@@ -1,4 +1,4 @@
-execs <- c("hfp")
+execs <- c("hfp", "hfp-client")
 if (WINDOWS)
     execs <- paste0(execs, ".exe")
 if (any(file.exists(execs))) {

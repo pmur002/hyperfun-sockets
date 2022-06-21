@@ -28,17 +28,17 @@ if not, see -  http://CGPL.org to get a copy of the License.
 
 using namespace std;
 
-struct link {
+struct hflink {
 	double x;
 	double y;
-	struct link * next;
+	struct hflink * next;
 };
 
-typedef struct link link;
+typedef struct hflink hflink;
 
 struct chain {
-	link* head;
-	link* tail;
+	hflink* head;
+	hflink* tail;
 	int orientation;
 	int number;
 	struct chain** isLeftForFirst;
@@ -93,7 +93,7 @@ private:
 	//max number of chains
 	int maxChains;
 	//empty links to use
-	link * stack;
+	hflink * stack;
 	//Number of segments have been took from stack
 	int segment_counter;
 	//Number of chains

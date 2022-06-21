@@ -27,7 +27,7 @@ if not, see -  http://CGPL.org to get a copy of the License.
 #include <algorithm>
 
 //creating the new chain with given values of head and tail coordinates
-void createchain(chain* newchain, link* tail, link* head, int orientation, int number, double tailx, double taily, double headx, double heady) {
+void createchain(chain* newchain, hflink* tail, hflink* head, int orientation, int number, double tailx, double taily, double headx, double heady) {
 	newchain->tail = tail;
 	newchain->head = head;
 	newchain->orientation = orientation;
@@ -59,7 +59,7 @@ void copychain(const chain from, chain * to) {
 };
 
 //adding link to chain
-void addlink(chain* tochain, link * newlink, double x, double y, bool isHead, int orientation) {
+void addlink(chain* tochain, hflink * newlink, double x, double y, bool isHead, int orientation) {
 	newlink->x = x;
 	newlink->y = y;
 	if (isHead) {
@@ -100,7 +100,7 @@ HFSlicer::HFSlicer(HFInterpreter& interp, vector<double> boundaries, vector<doub
 	maxChains = ((int)((boundaries[3] - boundaries[0]) / slicingStep[0]) * (int)((boundaries[4] - boundaries[1]) / slicingStep[1]) / 2);
 
 	//empty links to use
-	stack = (link*)calloc(maxPoints + 1, sizeof(link));
+	stack = (hflink*)calloc(maxPoints + 1, sizeof(hflink));
 
 	number_of_chains = 0;
 
@@ -1463,7 +1463,7 @@ void HFSlicer::printchain(ostream& toFile, const chain c) {
 
 	//n
 	int points_counter = 0;
-	link* l = c.tail;
+	hflink* l = c.tail;
 
 	while (l != c.head) {
 		points_counter++;

@@ -1,2 +1,4 @@
 
 export(hyperfun)
+
+export(hyperfun.socket)
