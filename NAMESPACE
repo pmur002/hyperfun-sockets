@@ -1,4 +1,44 @@
+################################################################################
+## Exports
 
-export(hyperfun)
+export(hfp)
 
-export(hyperfun.socket)
+## FRep
+export(hfSphere)
+## hfR
+export(hfR)
+## Models
+export(hfModel)
+
+################################################################################
+## S3methods
+
+## hfp()
+S3method("hfp", "HyperFunObject")
+S3method("hfp", "HyperFunModel")
+
+## isExternal()
+S3method("isExternal", "HyperFunObject")
+S3method("isExternal", "HyperFunModel")
+
+## length()
+## FRep
+S3method("length", "HyperFunSphere")
+## hfR
+S3method("length", "HyperFunR")
+## Models
+S3method("length", "HyperFunModel")
+
+## as.character()
+## FRep
+S3method("as.character", "HyperFunSphere")
+## hfR
+S3method("as.character", "HyperFunR")
+## Models
+S3method("as.character", "HyperFunModel")
+
+## Ops
+S3method("Ops", "HyperFun")
+
+## print()
+S3method("print", "HyperFun")
