@@ -59,6 +59,11 @@ double hfExternal(double* f_a, String_Array_T* str_param)
     int numbytes;  
     char *eptr;
 
+    if (HF_sockfd < 0) {
+        printf("Socket connection required (are you using hfp-client?)\n");
+        exit(1);
+    }
+
     funIndex = f_a[0];
 
     array_index = (int)f_a[1];
@@ -71,8 +76,10 @@ double hfExternal(double* f_a, String_Array_T* str_param)
     int len = strlen(buffer);
 
     // Send request for value
-    if (send(HF_sockfd, buffer, len, 0) == -1)
+    if (send(HF_sockfd, buffer, len, 0) == -1) {
         perror("send");
+        exit(1);
+    }
     
     // Receive value
     if ((numbytes = recv(HF_sockfd, buffer, MAXDATASIZE-1, 0)) == -1) {
