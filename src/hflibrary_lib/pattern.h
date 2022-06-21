@@ -49,6 +49,8 @@ return SS;
 
 }
 
+static double ConcentriqueCircle(double xt,double yt,
+                                 double zt) __attribute__((unused));
 static double ConcentriqueCircle(double xt,double yt,double zt){
 double val;
 
@@ -71,6 +73,8 @@ static double cycle(double value)
  
 }
 
+static double Crackles(double xt,double yt,double zt,
+                       double phase,double freq) __attribute__((unused));
 static double Crackles(double xt,double yt,double zt,double phase,double freq){
 
 double noise_x = -1+(Noise(xt,xt,zt,phase,freq)*2.0);
@@ -92,12 +96,14 @@ return noise;
 
 static double Noise3(double *);
 
+static double clamp(double x, double a, double b) __attribute__((unused));
 static double clamp(double x, double a, double b)
 {
     return (x < a ? a : (x > b ? b : x));
 }
 
 
+static double turbulence(double *v, double freq) __attribute__((unused));
 static double turbulence(double *v, double freq)
 {
 	double t, vec[3];
@@ -121,7 +127,7 @@ static double turbulence(double *v, double freq)
 
 static int p[B + B + 2];
 static double g3[B + B + 2][3];
-static int start = 1;
+static int start  __attribute__((unused)) = 1;
 
 
 
@@ -204,6 +210,7 @@ static void normalize3(double v[3])
 
 
 
+static void InitPerlin(int seed) __attribute__((unused));
 static void InitPerlin(int seed)
 {
 	int i, j, k;
@@ -237,6 +244,8 @@ static void InitPerlin(int seed)
 static int first=1;
 static double     *exponent_array;
 
+static double fBm( double* vect, double H, 
+                   double lacunarity, double octaves ) __attribute__((unused));
 static double fBm( double* vect, double H, double lacunarity, double octaves )
 {
 

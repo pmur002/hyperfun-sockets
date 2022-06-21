@@ -2,7 +2,6 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
 #include <memory.h>
 
 #include "hfbsp.h"
@@ -67,7 +66,10 @@ BSPPlane* buildPlane(double x1, double y1, double z1,
 #endif
 	plane->a = nx; plane->b = ny; plane->c = nz;
 	plane->d = - (nx*x1 + ny*y1 + nz*z1);
-	assert ((plane->a*plane->a + plane->b*plane->b + plane->c*plane->c) != 0.0);
+        if ((plane->a*plane->a + plane->b*plane->b + plane->c*plane->c) == 0.0) {
+            printf("Error in buildPlane");
+            exit(1);
+        }
 	return plane;
 }
 
@@ -161,20 +163,23 @@ double sbspGetValue(double x, double y, double z, BSPTree* pTree)
 		return 0.0;
 	fDistance = distancePlane(x, y, z, pTree->plPartition);
 	fResult = fDistance;
-	if (pTree->pFront)
-	{
-		fFront = sbspGetValue(x, y, z, pTree->pFront);
-		fResult = r_int(fDistance, fFront, g_stoScheme);
-	}
-	if (pTree->pBack)
-	{
-		fBack = sbspGetValue(x, y, z, pTree->pBack);
-		fResult = r_uni(fDistance, fBack, g_stoScheme);
-	}
 	if (pTree->pFront && pTree->pBack)
 	{
+		fFront = sbspGetValue(x, y, z, pTree->pFront);
+		fBack = sbspGetValue(x, y, z, pTree->pBack);
 		fResult = r_uni(r_int(r_uni(fDistance, fBack, g_stoScheme), fFront, g_stoScheme), r_int(-fDistance, fBack, g_stoScheme), g_stoScheme);
-	}
+	} else {
+            if (pTree->pFront)
+                {
+                    fFront = sbspGetValue(x, y, z, pTree->pFront);
+                    fResult = r_int(fDistance, fFront, g_stoScheme);
+                }
+            if (pTree->pBack)
+                {
+                    fBack = sbspGetValue(x, y, z, pTree->pBack);
+                    fResult = r_uni(fDistance, fBack, g_stoScheme);
+                }
+        }
 	return fResult;
 }
 
@@ -241,7 +246,10 @@ void sbspProcessTree(BSPTree* pTree, int nPolygonsSize, int* pPolygons)
 	int nPoly, nItOpt, iIndex, iSubIndex, iSplitResult;
 	int cl;
 
-	assert(nPolygonsSize != 0);
+        if (nPolygonsSize == 0) {
+            printf("nPolygonsSize == 0");
+            exit(1);
+        }
 	fRatioOpt = 0.0;
 	nItOpt = -1;
 #ifdef SBSP_NAIVE
@@ -331,10 +339,14 @@ void sbspProcessTree(BSPTree* pTree, int nPolygonsSize, int* pPolygons)
 		}
 	}
 	/* second pass - fill the arrays and repeat recursively */
-	if (nToFront != 0)
+	if (nToFront != 0) {
 		pFront = (int*)malloc(sizeof(int)*nToFront);
-	if (nToBack != 0)
+                for (int i=0; i<nToFront; i++) pFront[i] = 0;
+        }
+	if (nToBack != 0) {
 		pBack = (int*)malloc(sizeof(int)*nToBack);
+                for (int i=0; i<nToBack; i++) pBack[i] = 0;
+        }
 	nFrontSize = 0; nBackSize = 0;
 	for (iIndex = 0; iIndex < nPolygonsSize; iIndex++)
 	{
@@ -352,7 +364,10 @@ void sbspProcessTree(BSPTree* pTree, int nPolygonsSize, int* pPolygons)
 			break;
 		case polygon_spanning:
 			iSplitResult = sbspSplitPolygon(pPolygons[iIndex], pTree->plPartition, &nToFront, &nToBack);
-			assert(iSplitResult != 0);
+                        if (iSplitResult == 0) {
+                            printf("iSplitResult == 0");
+                            exit(1);
+                        }
 			pFront[nFrontSize] = nToFront;
 			nFrontSize++;
 			pBack[nBackSize] = nToBack;
@@ -634,8 +649,10 @@ int sbspClassifyPolygon(int nIndex, BSPPlane* plane)
 	if (fabs(cosa-1.0) < g_angleTol && ret == polygon_spanning)
 		ret = polygon_coincident;
 
-	assert (ret != polygon_undefined);
-
+        if (ret == polygon_undefined) {
+            printf("polygon undefined");
+            exit(1);
+        }
 	return ret;
 }
 

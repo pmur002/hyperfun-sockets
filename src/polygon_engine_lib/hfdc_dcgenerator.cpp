@@ -26,7 +26,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <float.h>
-#include <assert.h>
 
 #include "hfdc_dcgenerator.h"
 
@@ -114,7 +113,7 @@ void DcGenerator::sampleValue()
 	double iZ = (maxZ - minZ)/(gZ-1);
 	value = (double ***)new double*[gZ];
 	for(i=0; i<gZ; i++){
-		cout << "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b" << i << "/" << gZ;
+		cout << i << "/" << gZ << endl;
 		double z = minZ + i*iZ;
 		value[i] = new double*[gY];
 		for(int j=0; j<gY; j++){
@@ -126,7 +125,7 @@ void DcGenerator::sampleValue()
 			}
 		}
 	}
-	cout << "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b" << i << "/" << gZ << endl;
+	cout << i << "/" << gZ << endl;
 }
 
 void DcGenerator::generateQuadMesh()
@@ -572,7 +571,8 @@ void DcGenerator::createHfMesh()
 		int i3 = quadMesh->face[i][2];
 		int i4 = quadMesh->face[i][3];
 		int f[3];
-		int t1, t2;
+		int t1 __attribute__((unused));
+                int t2 __attribute__((unused));
 
 		double a1, a2, min1, min2;
 		//cut along (i1,i3)
@@ -664,7 +664,7 @@ double DcGenerator::nablaFuncF(std::vector<double>& g, double x, double y, doubl
 double DcGenerator::convergeToZero(std::vector<double>& p, double x1, double y1, double z1, double v1, 
 								   double x2, double y2, double z2, double v2)
 {
-	double x, y, z, v;
+	double x, y, z, v = 0;
 	int i;
 	for (i = 0; i < IMAX; i++){
 		double w1 = fabs(v2);
