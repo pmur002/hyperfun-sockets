@@ -26,7 +26,7 @@ if not, see -  http://CGPL.org to get a copy of the License.
 
 
 #include "main.h"
-
+#include "hfp-sock.h"
 
 CMainApp *edi;
 
@@ -42,6 +42,8 @@ void freeRessources (void)
 
 int main(int argc, char ** argv) 
 {
+
+    HF_sockfd = -1;
 
     edi = new CMainApp (argc, argv);
     
