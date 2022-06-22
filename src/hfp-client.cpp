@@ -39,8 +39,6 @@ if not, see -  http://CGPL.org to get a copy of the License.
 #include "hfp-sock.h"
 #include "hfp-sockdata.h"
 
-CMainApp *edi;
-
 int vn_t;
 
 void freeRessources (void) 
@@ -58,8 +56,6 @@ void *get_in_addr(struct sockaddr *sa)
 
 int main(int argc, char *argv[])
 {
-    int numbytes;  
-    char buf[MAXDATASIZE];
     struct addrinfo *servinfo, *p, hints;
     int rv;
     char s[INET_ADDRSTRLEN];
@@ -121,10 +117,6 @@ int main(int argc, char *argv[])
         fprintf(stderr, "client: failed to connect\n");
         return 2;
     }
-
-    inet_ntop(p->ai_family, get_in_addr((struct sockaddr *)p->ai_addr),
-            s, sizeof s);
-    printf("client: connecting to %s\n", s);
 
     freeaddrinfo(servinfo); // all done with this structure
 

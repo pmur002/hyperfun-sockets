@@ -11,7 +11,7 @@ SOURCES = cppinterpreter_lib/hfinterpreter.cpp hflibrary_lib/Bezier.c hflibrary_
 # Obtain the object files
 OBJECTS = $(addsuffix .o,$(basename $(SOURCES)))
 
-# Make the shared object
+# Make the binary object
 all: $(OBJECTS)
 	$(CXX) $(CXXFLAGS) $(PKG_CPPFLAGS) -o hfp hfp.cpp $(OBJECTS)
 	$(CXX) $(CXXFLAGS) $(PKG_CPPFLAGS) -o hfp-client hfp-client.cpp $(OBJECTS)

@@ -72,6 +72,8 @@ bool HAS_ATTRIBUTES = 1;
 extern int solidAndWire;
 
 
+CMainApp *edi;
+
 
 
 //////////////////////

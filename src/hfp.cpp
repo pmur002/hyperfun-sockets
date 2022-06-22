@@ -28,8 +28,6 @@ if not, see -  http://CGPL.org to get a copy of the License.
 #include "main.h"
 #include "hfp-sockdata.h"
 
-CMainApp *edi;
-
 int vn_t;
 
 void freeRessources (void) 
