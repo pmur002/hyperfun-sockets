@@ -1,7 +1,4 @@
 
-CXX = `"$(R_HOME)/bin/R" CMD config CXX`
-CXXFLAGS = `"$(R_HOME)/bin/R" CMD config CXXFLAGS`
-
 # Default make file
 PKG_CPPFLAGS = -I. -Ihflibrary_lib -Ipolygon_engine_lib -Iinterpreter_lib -Icppinterpreter_lib -Ihfp_lib
 PKG_LIBS = -lws2_32
