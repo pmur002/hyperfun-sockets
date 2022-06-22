@@ -1,3 +1,20 @@
+
+The R code and assorted infrastructure of this package is under GLP >= 2.
+
+However, the C/C++ code is a modified version of the source code from the
+HyperFun Project ...
+
+  https://hyperfun.org/hyperfun/main
+  http://sourceforge.net/scm/?type=bzr&group_id=122019
+
+... hence all C/C++ code comes under the Common Good Public License ...
+
+  http://www.cgpl.org
+
+... (copy included below).
+
+--------------------------------------------------------------------------------
+
 Common Good Public License
 Beta 1.0
 
