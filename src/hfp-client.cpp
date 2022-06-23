@@ -60,6 +60,8 @@ int main(int argc, char *argv[])
     int rv;
     char s[INET_ADDRSTRLEN];
 
+    edi = new CMainApp (argc, argv);
+    
 #ifdef _WIN32
     WSADATA wsaData;
     int iResult;
@@ -82,7 +84,8 @@ int main(int argc, char *argv[])
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_protocol = IPPROTO_TCP;
 
-    if ((rv = getaddrinfo("127.0.0.1", PORT, &hints, &servinfo)) != 0) {
+    if ((rv = getaddrinfo("127.0.0.1", edi->getPort(), 
+                          &hints, &servinfo)) != 0) {
         fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(rv));
 #ifdef _WIN32
         WSACleanup();
@@ -120,8 +123,6 @@ int main(int argc, char *argv[])
 
     freeaddrinfo(servinfo); // all done with this structure
 
-    edi = new CMainApp (argc, argv);
-    
     vn_t = edi->init();
     if (vn_t == 0) {
         if (edi != NULL) {

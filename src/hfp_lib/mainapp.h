@@ -68,6 +68,7 @@ public:
 	double GetNormalFromTriangle(int,int,int);
 	double GetAttrFromTriangle(int,int,int);
 
+        const char* getPort();
 
 	bool getAttribute();
 

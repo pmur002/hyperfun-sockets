@@ -61,6 +61,8 @@ void HFPCommandLine::Init(int& argc, char** argv){
 
 void HFPCommandLine::defaults(){
   itsObject=DEF_OBJECT;
+
+  itsPort=DEF_PORT;
   
   itsXYZMapping.push_back(DEF_XMAPPING);
   itsXYZMapping.push_back(DEF_YMAPPING);
@@ -165,6 +167,13 @@ void HFPCommandLine::parse(){
 	itsCurrentArg++;
       }
       break;
+
+    case Port:
+        if (hasArg("-p")) {
+            itsPort = *itsCurrentArg;
+            itsCurrentArg++;
+        }
+        break;
       
       /* Mapping */
     case Mapping:

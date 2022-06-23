@@ -222,6 +222,10 @@ void CMainApp::generateSlicingGrid() {
 	itsSliser_ = new HFSlicer(itsInterpreter, itsCL.itsBBMinMax, itsCL.itsSlicingGridStep);
 };
 
+const char* CMainApp::getPort() {
+    return itsCL.itsPort.c_str();
+}
+
 void CMainApp::getViewPos(double pos[],double  look[]){
 	double NMX=itsCL.itsBBMinMax[3]-itsCL.itsBBMinMax[0];
 	double NMY=itsCL.itsBBMinMax[4]-itsCL.itsBBMinMax[1];

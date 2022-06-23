@@ -7,14 +7,17 @@ hfp.HyperFunObject <- function(x, ...) {
     hfp(hfModel(x), ...)
 }
 
-hfp.HyperFunModel <- function(x, format = "stlb", ...) {
+hfp.HyperFunModel <- function(x, format = "stlb", port = 54321, ...) {
     hfFile <- tempfile(fileext = ".hf")
     outFile <- gsub("hf$", format, hfFile)
     writeLines(as.character(x), hfFile)
     if (isExternal(x)) {
-        hyperfun.socket(c(hfFile, paste0("-", format), outFile))
+        hyperfun.socket(c(hfFile,
+                          paste0("-", format), outFile),
+                        port = port)
     } else {
-        hyperfun(c(hfFile, paste0("-", format), outFile))
+        hyperfun(c(hfFile,
+                   paste0("-", format), outFile))
     }
     outFile
 }
@@ -117,7 +120,7 @@ hyperfun <- function(args) {
     system2(call, args)
 }
 
-hyperfun.socket <- function(args) {
+hyperfun.socket <- function(args, port) {
     ## Run 'hfp' asynchronously and communicate via socket
     suffix <- ""
     if(.Platform$OS.type == "windows")
@@ -125,9 +128,10 @@ hyperfun.socket <- function(args) {
     binary <- paste0("hfp-client", suffix)
     call <- system.file("bin", Sys.getenv("R_ARCH"), binary,
                         package="hyperfun")
+    args <- c(args, "-p", port)
     system2(call, args, wait=FALSE)
     ## Create socket 
-    s <- make.socket("localhost", 12345, server=TRUE)
+    s <- make.socket("localhost", port, server=TRUE)
     ## Wait for a response
     while (TRUE) {
         reply <- read.socket(s, loop=TRUE)

@@ -83,6 +83,14 @@ public:
 #define DEF_OBJECT "my_model"
 	std::string itsObject;
 
+        // *********** PORT ***********
+        // ARGUMENT FORMAT: string
+        // NOTES: Specifies port for socket connection 
+        //        (for hfp-client;  ignored by hfp)
+        // ARGUMENT KEY: PORT "-p"
+#define DEF_PORT "54321"
+        std::string itsPort;
+
 	// *********** MAPPING **********
 	// ARGUMENT FORMAT: Comma delimited double values or the charecters X, Y, or Z. Must have at least 3 arguments.
 	// NOTES:	Specifies variable and constant X array values for Object. =0.0 where variable.
@@ -302,10 +310,10 @@ public:
 
 private:
 	//NOTE: enum ARG order and VALIDARGS must match!!
-	enum ARG {Object=0, Mapping, Parameters, TimeReport, GridSize, SlicingGridStep,
+	enum ARG {Object=0, Port, Mapping, Parameters, TimeReport, GridSize, SlicingGridStep,
 		BoundingBox, LineColor, FaceColor, IsoValue, Help, WindowSize, Search, Reduce, STLOut, STLBOut, VRMLOut,POVOut, CLIOut, Display, ShowBoundingBox, Show3DAxes,  Attributes, UseDC, ERR};
 	// *********** Comprehensive List of Current Valid Arguments **********
-#define VALIDARGS "-o,-x,-a,-t,-g,-gs,-b,-cl,-cf,-i,-h,-w,-s,-r,-stl,-stlb,-wrl,-pov,-cli,-d,-sb,-sa,-ct,-usedc"
+#define VALIDARGS "-o,-p,-x,-a,-t,-g,-gs,-b,-cl,-cf,-i,-h,-w,-s,-r,-stl,-stlb,-wrl,-pov,-cli,-d,-sb,-sa,-ct,-usedc"
 
 
 	void defaults();
