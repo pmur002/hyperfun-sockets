@@ -55,6 +55,8 @@
 
 #define HELPo "\nObject Name: <S> (Default Value <my_model>)\n Given as a single string, this is the name of the Object in the Model that is\n to be polygonized. If the given Object does not exist the first object in the\n model is used.\n"
 
+#define HELPp "\nPort Number: <S> (Default Value <54321>)\n Given as a single string, this is the port number for hfp-client to connect to\n (on localhost).  It is ignored by hfp.\n"
+
 #define HELPt "\nTime Report: No Arguments.\nThe -t option turns on the output of the timing information for the\n polygonization process.\n"
 
 #define HELPx "\nMapping: <D/C,D/C,D/C....> (Default Value <X,Y,Z>)\nGiven as a list of double values or characters that define the mapping for\nobject polygonization. The charecters X, Y, and Z define the X, Y, and Z\nmapping for the object. Other variables will be held constant at the specified\ndouble values.\n"

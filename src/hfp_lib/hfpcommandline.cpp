@@ -643,6 +643,7 @@ string HFPCommandLine::helpOut(){
   ret+=HELPh;
   ret+=HELPi;
   ret+=HELPo;
+  ret+=HELPp;
   ret+=HELPs;
   ret+=HELPt;
   ret+=HELPw;
