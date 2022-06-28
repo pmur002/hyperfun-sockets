@@ -43,6 +43,8 @@ Authors@R: c(
            role = c("aut", "cph"),
            comment = "Author of HyperFun")
   )
-Description: R interface to the HyperFun system for generating 3D models.
+Description: An R interface to the HyperFun system for generating 3D models 
+  with constructive solid geometry.
+Imports: rgl
 URL: https://github.com/pmur002/hyperfun, https://hyperfun.org/
 License: GPL (>=2) | file LICENCE

@@ -7,7 +7,7 @@ hfp.HyperFunObject <- function(x, ...) {
     hfp(hfModel(x), ...)
 }
 
-hfp.HyperFunModel <- function(x, format = "stlb", port = 54321, ...) {
+hfp.HyperFunModel <- function(x, format = "rgl", port = 54321, ...) {
     if (format == "rgl") {
         plot <- TRUE
         format <- "stlb"
