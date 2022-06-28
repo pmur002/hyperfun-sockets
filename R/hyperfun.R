@@ -8,6 +8,12 @@ hfp.HyperFunObject <- function(x, ...) {
 }
 
 hfp.HyperFunModel <- function(x, format = "stlb", port = 54321, ...) {
+    if (format == "rgl") {
+        plot <- TRUE
+        format <- "stlb"
+    } else {
+        plot <- FALSE
+    }
     hfFile <- tempfile(fileext = ".hf")
     outFile <- gsub("hf$", format, hfFile)
     writeLines(as.character(x), hfFile)
@@ -18,6 +24,9 @@ hfp.HyperFunModel <- function(x, format = "stlb", port = 54321, ...) {
     } else {
         hyperfun(c(hfFile,
                    paste0("-", format), outFile))
+    }
+    if (plot) {
+        rgl::readSTL(outFile, ...)
     }
     outFile
 }
@@ -86,6 +95,17 @@ length.HyperFunModel <- function(x, ...) {
     1
 }
 
+################################################################################
+## Plot methods
+
+plot.HyperFunObject <- function(x, ...) {
+    plot(hfModel(x), ...)
+}
+
+plot.HyperFunModel <- function(x, ...) {
+    hfp(x, format="rgl", ...)
+}
+    
 ################################################################################
 ## General methods
 

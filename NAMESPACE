@@ -45,3 +45,7 @@ S3method("Ops", "HyperFun")
 
 ## print()
 S3method("print", "HyperFun")
+
+## plot()
+S3method("plot", "HyperFunObject")
+S3method("plot", "HyperFunModel")
