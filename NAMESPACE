@@ -4,7 +4,8 @@
 export(hfp)
 
 ## FRep
-export(hfSphere)
+export(hfSphere,
+       hfBlock)
 ## hfR
 export(hfR)
 ## Models
@@ -24,6 +25,7 @@ S3method("isExternal", "HyperFunModel")
 ## length()
 ## FRep
 S3method("length", "HyperFunSphere")
+S3method("length", "HyperFunBlock")
 ## hfR
 S3method("length", "HyperFunR")
 ## Models
@@ -32,6 +34,7 @@ S3method("length", "HyperFunModel")
 ## as.character()
 ## FRep
 S3method("as.character", "HyperFunSphere")
+S3method("as.character", "HyperFunBlock")
 ## hfR
 S3method("as.character", "HyperFunR")
 ## Models
