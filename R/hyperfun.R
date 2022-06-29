@@ -7,27 +7,62 @@ hfp.HyperFunObject <- function(x, ...) {
     hfp(hfModel(x), ...)
 }
 
-hfp.HyperFunModel <- function(x, format = "rgl", port = 54321, ...) {
+fixDensity <- function(density) {
+    density <- as.numeric(density)
+    n <- length(density)
+    if (n < 1 || n == 2 || n > 3)
+        stop("Invalid density")
+    rep(density, length.out=3)
+}
+
+fixBBox <- function(bbox) {
+    bbox <- as.numeric(bbox)
+    n <- length(bbox)
+    if (n < 1 || (n > 3 && n < 6) || n > 6) {
+        stop("Invalid bounding box")
+    }
+    if (n == 1) {
+            rep(c(-bbox, bbox), each=3)
+    } else if (n == 2) {
+        rep(bbox, each=3)
+    } else if (n == 3) {
+        as.numeric(cbind(-bbox, bbox))
+    } else {
+        bbox
+    }
+}
+
+hfp.HyperFunModel <- function(x, format = "rgl",
+                              bbox = 10, density = 30,
+                              port = 54321, ...) {
+    ## Assemble arguments for 'hfp'
     if (format == "rgl") {
         plot <- TRUE
         format <- "stlb"
     } else {
         plot <- FALSE
     }
+    density <- fixDensity(density)
+    bbox <- fixBBox(bbox)
     hfFile <- tempfile(fileext = ".hf")
     outFile <- gsub("hf$", format, hfFile)
+    params <- c(paste0("-", format), outFile,
+                "-b", paste0(bbox, collapse=","),
+                "-g", paste0(density, collapse=","))
+    ## Write .hf file
     writeLines(as.character(x), hfFile)
+    ## Call 'hfp' or 'hfp-client'
     if (isExternal(x)) {
-        hyperfun.socket(c(hfFile,
-                          paste0("-", format), outFile),
+        hyperfun.socket(c(hfFile, params),
                         port = port)
     } else {
-        hyperfun(c(hfFile,
-                   paste0("-", format), outFile))
+        hyperfun(c(hfFile, params))
     }
+    ## Render result (optionally)
     if (plot) {
         rgl::readSTL(outFile, ...)
     }
+    ## Return output file
     outFile
 }
 
