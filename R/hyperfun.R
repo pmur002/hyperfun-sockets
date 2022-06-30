@@ -87,6 +87,18 @@ hfModel <- function(..., op = "|", name = NULL) {
     if (!(op %in% c("|", "&", "-", "!", "*"))) {
         stop(paste0("Operator ", op, " not supported"))
     }
+    ## IF making a model based on more than 1 object (i.e., combining objects)
+    ## THEN "reduce" any object that represents more than one shape to
+    ## a single model (using "|" for 'op')
+    if (length(objects) > 1) {
+        objects <- lapply(objects,
+                          function(x) {
+                              if (length(x) > 1)
+                                  hfModel(x)
+                              else
+                                  x
+                          })
+    }
     name <- hfName(name, 1)
     model <- list(objects = objects, op = op, name = name)
     class(model) <- c("HyperFunModel", "HyperFun")
