@@ -24,10 +24,7 @@ export(hfModel)
 ## hfp()
 S3method("hfp", "HyperFunObject")
 S3method("hfp", "HyperFunModel")
-
-## isExternal()
-S3method("isExternal", "HyperFunObject")
-S3method("isExternal", "HyperFunModel")
+S3method("hfp", "character")
 
 ## length()
 ## FRep

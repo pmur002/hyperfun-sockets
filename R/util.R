@@ -24,17 +24,9 @@ hfOp <- function(op) {
            op)
 }
 
-## Does a model contain an hfExternal object ?
+## Does HyperFun code contain a call to hfExternal() ?
 isExternal <- function(x) {
-    UseMethod("isExternal")
-}
-
-isExternal.HyperFunObject <- function(x) {
-    inherits(x, "HyperFunR")
-}
-
-isExternal.HyperFunModel <- function(x) {
-    any(unlist(lapply(x$objects, isExternal)))
+    length(grep("hfExternal", x))
 }
 
 print.HyperFun <- function(x, ...) {

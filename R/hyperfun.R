@@ -35,7 +35,23 @@ fixBBox <- function(bbox) {
 hfp.HyperFunModel <- function(x, format = "rgl",
                               bbox = 10, density = 30,
                               port = 54321, ...) {
-    ## Assemble arguments for 'hfp'
+    hfp(as.character(x),
+        format=format, bbox=bbox, density=density, port=port,
+        ...)
+}
+
+## Single character values is taken to be the name of a .hf file
+## Multiple character values are taken to be lines of HyperFun code
+hfp.character <- function(x, format = "rgl",
+                          bbox = 10, density = 30,
+                          port = 54321, ...) {
+    if (length(x) == 1) {
+        hfcode <- readLines(x)
+        if (length(hfcode) < 2)
+            stop("File does not appear to contain HyperFun code")
+        return(hfp(hfcode))
+    } 
+    ## Assemble arguments for 'hyperfun'
     if (format == "rgl") {
         plot <- TRUE
         format <- "stlb"
@@ -50,7 +66,7 @@ hfp.HyperFunModel <- function(x, format = "rgl",
                 "-b", paste0(bbox, collapse=","),
                 "-g", paste0(density, collapse=","))
     ## Write .hf file
-    writeLines(as.character(x), hfFile)
+    writeLines(x, hfFile)
     ## Call 'hfp' or 'hfp-client'
     if (isExternal(x)) {
         hyperfun.socket(c(hfFile, params),
@@ -63,8 +79,9 @@ hfp.HyperFunModel <- function(x, format = "rgl",
         rgl::readSTL(outFile, ...)
     }
     ## Return output file
-    outFile
+    invisible(outFile)
 }
+
 
 ################################################################################
 ## HyperFun models (combinations of objects)
